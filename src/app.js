@@ -48,13 +48,13 @@ function displayTemperature(response) {
 }
 
 function changeImage(icon) {
-  let sunnySrc = "src/images/sunny.jpg";
-  let rainySrc = "src/images/rainy.jpg";
-  let cloudySrc = "src/images/cloudy.jpg";
-  let stormySrc = "src/images/thunderstorm.jpg";
-  let snowySrc = "src/images/snowy.jpg";
-  let foggySrc = "src/images/foggy.jpg";
-  let sunnyCloudySrc = "src/images/sunnycloudy.jpg";
+  let sunnySrc = "src/images/sunny.png";
+  let rainySrc = "src/images/rainy.png";
+  let cloudySrc = "src/images/cloudysunny.png";
+  let stormySrc = "src/images/stormy.png";
+  let snowySrc = "src/images/snowy.png";
+  let foggySrc = "src/images/foggy.png";
+  let sunnyCloudySrc = "src/images/cloudysunny.png";
 
   if (icon === "01d" || icon === "01n") {
     return sunnySrc;
