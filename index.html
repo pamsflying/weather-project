@@ -15,6 +15,10 @@
       crossorigin="anonymous"
     />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/fadc7a7057.js"
+      crossorigin="anonymous"
+    ></script>
 
     <link rel="stylesheet" href="src/style.css" />
     <title>Weather App</title>
@@ -35,18 +39,45 @@
                 />
               </div>
 
-              <input
+              <button
+                type="submit"
                 class="btn btn-light mr-1"
-                type="submit"
-                value="Search"
                 id="search-input"
-              />
-              <input
-                class="btn btn-light"
-                type="submit"
-                value="Use Current Location"
-                id="current-location"
-              />
+              >
+                <svg
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 16 16"
+                  class="bi bi-search"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"
+                  />
+                  <path
+                    fill-rule="evenodd"
+                    d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
+                  />
+                </svg>
+              </button>
+
+              <button class="btn btn-light" type="submit" id="current-location">
+                <svg
+                  width="1em"
+                  height="1em"
+                  viewBox="0 0 16 16"
+                  class="bi bi-cursor-fill"
+                  fill="currentColor"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"
+                  />
+                </svg>
+              </button>
             </div>
           </form>
           <div class="overview">
@@ -71,8 +102,10 @@
             </div>
             <div class="col-6">
               <ul>
-                <li>Humidity: <span id="humidity"></span>%</li>
-                <li>Wind: <span id="wind"></span> km/h</li>
+                <li>
+                  <strong>Humidity: </strong> <span id="humidity"></span>%
+                </li>
+                <li><strong>Wind: </strong><span id="wind"></span> km/h</li>
               </ul>
             </div>
           </div>
