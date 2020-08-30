@@ -1,9 +1,10 @@
 h1 {
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 30px;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 50px;
   margin-bottom: 0;
   color: #59c6ff;
+  font-family: "Pacifico", cursive;
 }
 
 ul {
@@ -58,21 +59,14 @@ li:first-letter {
   top: -45px;
 }
 
-.weather-temperature a:link {
+.weather-temperature .active {
   color: #59c6ff;
-  background-color: transparent;
+  cursor: default;
 }
 
-.weather-temperature a:visited {
+.weather-temperature .active:hover {
   color: #fe8f90;
-  background-color: transparent;
   text-decoration: none;
-}
-
-.weather-temperature a:hover {
-  color: #fe8f90;
-  background-color: transparent;
-  text-decoration: underline;
 }
 
 .weather-forecast {
