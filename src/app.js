@@ -97,7 +97,7 @@ function displayForecast(response) {
       <h3>
         ${formatHours(forecast.dt * 1000)}
       </h3>
-      <img src="" id="icon" />
+      <img src="${changeImage(forecast.weather[0].icon)}" id="icon" />
       <div class="weather-forecast-temperature">
         <strong>
           ${Math.round(forecast.main.temp_max)}°
