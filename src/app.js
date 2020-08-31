@@ -35,6 +35,7 @@ function displayTemperature(response) {
   let windElement = document.querySelector("#wind");
   let dateElement = document.querySelector("#date");
   let iconElement = document.querySelector("#icon");
+  let timeElement = document.querySelector("#time");
 
   celsiusTemperature = response.data.main.temp;
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
@@ -45,6 +46,11 @@ function displayTemperature(response) {
   dateElement.innerHTML = formatDate(response.data.dt * 1000);
   iconElement.setAttribute("src", changeImage(response.data.weather[0].icon));
   iconElement.setAttribute("alt", response.data.weather[0].description);
+  timeElement.innerHTML = date.formatHours("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
 }
 
 function changeImage(icon) {
@@ -99,10 +105,12 @@ function displayForecast(response) {
       </h3>
       <img src="${changeImage(forecast.weather[0].icon)}" id="icon" />
       <div class="weather-forecast-temperature">
-        <strong>
+        <strong id="forcast-high">
           ${Math.round(forecast.main.temp_max)}°
         </strong>
+        <span id="forecast-low">
         ${Math.round(forecast.main.temp_min)}°
+        </span>
       </div>
     </div>
   `;
@@ -146,6 +154,18 @@ function displayFahrenheitTemperature(event) {
   fahrenheitLink.classList.add("active");
   let fahrenheiTemperature = (celsiusTemperature * 9) / 5 + 32;
   temperatureElement.innerHTML = Math.round(fahrenheiTemperature);
+
+  let highElement = document.querySelectorAll("forecast-high");
+  let lowElement = document.querySelectorAll("forecast-low");
+  highElement.forEach(function (high) {
+    let currentTemp = high.innerHTML;
+    high.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}`;
+  });
+
+  lowElement.forEach(function (low) {
+    let currentTemp = low.innerHTML;
+    low.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}`;
+  });
 }
 
 function displayCelsiusTemperature(event) {
@@ -154,6 +174,18 @@ function displayCelsiusTemperature(event) {
   fahrenheitLink.classList.remove("active");
   let temperatureElement = document.querySelector("#temperature");
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
+
+  let highElement = document.querySelectorAll("forecast-high");
+  let lowElement = document.querySelectorAll("forecast-low");
+  highElement.forEach(function (high) {
+    let currentTemp = high.innerHTML;
+    high.innerHTML = `${Math.round(((currentTemp - 32) * 5) / 9)}`;
+  });
+
+  lowElement.forEach(function (low) {
+    let currentTemp = low.innerHTML;
+    low.innerHTML = `${Math.round(((currentTemp - 32) * 5) / 9)}`;
+  });
 }
 
 let celsiusTemperature = null;
@@ -167,4 +199,4 @@ fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
-search("New York");
+search("Chicago");
