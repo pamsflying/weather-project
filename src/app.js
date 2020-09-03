@@ -1,3 +1,4 @@
+//format date and time
 function formatDate(timestamp) {
   let date = new Date(timestamp);
 
@@ -27,6 +28,7 @@ function formatHours(timestamp) {
   return `${hours}:${minutes}`;
 }
 
+//Shows data from API
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
@@ -46,6 +48,8 @@ function displayTemperature(response) {
   dateElement.innerHTML = formatDate(response.data.dt * 1000);
   iconElement.setAttribute("src", changeImage(response.data.weather[0].icon));
   iconElement.setAttribute("alt", response.data.weather[0].description);
+
+  //convert to US am/pm
   timeElement.innerHTML = date.formatHours("en-US", {
     hour: "numeric",
     minute: "numeric",
@@ -53,6 +57,7 @@ function displayTemperature(response) {
   });
 }
 
+//Icons reflect the weather
 function changeImage(icon) {
   let sunnySrc = "src/images/sunny.png";
   let rainySrc = "src/images/rainy.png";
@@ -91,6 +96,7 @@ function changeImage(icon) {
   }
 }
 
+//forcast
 function displayForecast(response) {
   let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML = null;
@@ -117,6 +123,7 @@ function displayForecast(response) {
   }
 }
 
+//searching city and submiting button
 function search(city) {
   let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
@@ -132,6 +139,7 @@ function handleSubmit(event) {
   search(cityInputElement.value);
 }
 
+//current location API and button
 function searchLocation(position) {
   let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
@@ -146,25 +154,27 @@ function getCurrentLocation(event) {
 let locationButton = document.querySelector("#current-location");
 locationButton.addEventListener("click", getCurrentLocation);
 
+//Switch between C/F
 function displayFahrenheitTemperature(event) {
   event.preventDefault();
   let temperatureElement = document.querySelector("#temperature");
 
   celsiusLink.classList.remove("active");
   fahrenheitLink.classList.add("active");
-  let fahrenheiTemperature = (celsiusTemperature * 9) / 5 + 32;
-  temperatureElement.innerHTML = Math.round(fahrenheiTemperature);
+  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
+  temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
 
   let highElement = document.querySelectorAll("forecast-high");
   let lowElement = document.querySelectorAll("forecast-low");
+
   highElement.forEach(function (high) {
-    let currentTemp = high.innerHTML;
-    high.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}`;
+    let currentTempHigh = high.innerHTML;
+    high.innerHTML = `${Math.round((currentTempHigh * 9) / 5 + 32)}`;
   });
 
   lowElement.forEach(function (low) {
-    let currentTemp = low.innerHTML;
-    low.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}`;
+    let currentTempLow = low.innerHTML;
+    low.innerHTML = `${Math.round((currentTempLow * 9) / 5 + 32)}`;
   });
 }
 
