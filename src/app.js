@@ -111,10 +111,10 @@ function displayForecast(response) {
       </h3>
       <img src="${changeImage(forecast.weather[0].icon)}" id="icon" />
       <div class="weather-forecast-temperature">
-        <strong id="forcast-high">
+        <strong id="forcast-high" class="forecastTempMax">
           ${Math.round(forecast.main.temp_max)}°
         </strong>
-        <span id="forecast-low">
+        <span id="forecast-low" class="forecastTempMin">
         ${Math.round(forecast.main.temp_min)}°
         </span>
       </div>
@@ -158,43 +158,68 @@ locationButton.addEventListener("click", getCurrentLocation);
 function displayFahrenheitTemperature(event) {
   event.preventDefault();
   let temperatureElement = document.querySelector("#temperature");
-
   celsiusLink.classList.remove("active");
   fahrenheitLink.classList.add("active");
+
+  celsiusLink.addEventListener("click", displayCelsiusTemperature);
+  fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
+
   let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
   temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
 
-  let highElement = document.querySelectorAll("forecast-high");
-  let lowElement = document.querySelectorAll("forecast-low");
+  let highTempElement = document.querySelectorAll("#forecast-high");
+  let highTemp = (temperatureHigh * 9) / 5 + 32;
+  highTempElement.innerHTML = `${Math.round(highTemp)}`;
+
+  let lowTempElement = document.querySelector("#temperatureLow");
+  let lowTemp = (temperatureLow * 9) / 5 + 32;
+  lowTempElement.innerHTML = `${Math.round(lowTemp)}`;
+
+  let highElement = document.querySelectorAll(".forecastTempMax");
+  let lowElement = document.querySelectorAll(".forecastTempMin");
 
   highElement.forEach(function (high) {
-    let currentTempHigh = high.innerHTML;
-    high.innerHTML = `${Math.round((currentTempHigh * 9) / 5 + 32)}`;
+    let currentTemp = high.innerHTML;
+    high.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}`;
+    return highElement;
   });
 
   lowElement.forEach(function (low) {
-    let currentTempLow = low.innerHTML;
-    low.innerHTML = `${Math.round((currentTempLow * 9) / 5 + 32)}`;
+    let currentTemp = low.innerHTML;
+    low.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}`;
+    return lowElement;
   });
 }
 
-function displayCelsiusTemperature(event) {
+function convertCelsius(event) {
   event.preventDefault();
-  celsiusLink.classList.add("active");
-  fahrenheitLink.classList.remove("active");
+
   let temperatureElement = document.querySelector("#temperature");
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
 
-  let highElement = document.querySelectorAll("forecast-high");
-  let lowElement = document.querySelectorAll("forecast-low");
+  let highTempElement = document.querySelectorAll("#forecast-high");
+  let highTemp = (temperatureHigh * 9) / 5 + 32;
+  highTempElement.innerHTML = `${Math.round(highTemp)}`;
+
+  let lowTempElement = document.querySelector("#temperatureLow");
+  let lowTemp = (temperatureLow * 9) / 5 + 32;
+  lowTempElement.innerHTML = `${Math.round(lowTemp)}`;
+
+  let highElement = document.querySelectorAll(".forecastTempMax");
+  let lowElement = document.querySelectorAll(".forecastTempMin");
+
   highElement.forEach(function (high) {
     let currentTemp = high.innerHTML;
     high.innerHTML = `${Math.round(((currentTemp - 32) * 5) / 9)}`;
+    return highElement;
   });
 
   lowElement.forEach(function (low) {
     let currentTemp = low.innerHTML;
     low.innerHTML = `${Math.round(((currentTemp - 32) * 5) / 9)}`;
+    return lowElement;
   });
 }
 
