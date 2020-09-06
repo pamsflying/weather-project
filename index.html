@@ -1,132 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Armata&family=Pacifico&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script
-      src="https://kit.fontawesome.com/fadc7a7057.js"
-      crossorigin="anonymous"
-    ></script>
 
-    <link rel="stylesheet" href="src/style.css" />
-    <title>Weather App</title>
-  </head>
-  <body>
-    <div class="container">
-      <div class="weather-app-wrapper">
-        <div class="weather-app">
-          <form id="search-form" class="mb-3">
-            <div class="row">
-              <div class="col-8">
-                <input
-                  type="search"
-                  placeholder="Search for a city.."
-                  class="form-control"
-                  id="city-input"
-                  autocomplete="off"
-                />
-              </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link href="https://fonts.googleapis.com/css2?family=Armata&family=Pacifico&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://kit.fontawesome.com/fadc7a7057.js" crossorigin="anonymous"></script>
 
-              <button
-                type="submit"
-                class="btn btn-light mr-1"
-                id="search-input"
-              >
-                <svg
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 16 16"
-                  class="bi bi-search"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"
-                  />
-                  <path
-                    fill-rule="evenodd"
-                    d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"
-                  />
-                </svg>
-              </button>
+  <link rel="stylesheet" href="src/style.css" />
+  <title>Weather App</title>
+</head>
 
-              <button class="btn btn-light" type="submit" id="current-location">
-                <svg
-                  width="1em"
-                  height="1em"
-                  viewBox="0 0 16 16"
-                  class="bi bi-cursor-fill"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </form>
-
+<body>
+  <div class="container">
+    <div class="weather-app-wrapper">
+      <div class="weather-app">
+        <form id="search-form" class="mb-3">
           <div class="row">
-            <div class="col-9">
-              <div class="clearfix overview">
-                <img src="" alt="Clear" id="icon" class="float-right" />
-                <div class="float-left">
-                  <h1 id="city"></h1>
-                  <ul>
-                    <li>Last updated on <span id="date"><span id="time"></span></li>
-                    <li id="description"></li>
-                  </ul>
-                </div>
+            <div class="col-8">
+              <input type="search" placeholder="Search for a city.." class="form-control" id="city-input"
+                autocomplete="off" />
+            </div>
+
+            <button type="submit" class="btn btn-light mr-1" id="search-input">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-search" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" />
+                <path fill-rule="evenodd"
+                  d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+              </svg>
+            </button>
+
+            <button class="btn btn-light" type="submit" id="current-location">
+              <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-cursor-fill" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M14.082 2.182a.5.5 0 0 1 .103.557L8.528 15.467a.5.5 0 0 1-.917-.007L5.57 10.694.803 8.652a.5.5 0 0 1-.006-.916l12.728-5.657a.5.5 0 0 1 .556.103z" />
+              </svg>
+            </button>
+          </div>
+        </form>
+
+        <div class="row">
+          <div class="col-9">
+            <div class="clearfix overview">
+              <img src="" alt="Clear" id="icon" class="float-right" />
+              <div class="float-left">
+                <h1 id="city"></h1>
+                <ul>
+                  <li>Last updated on <span id="date"><span id="time"></span></li>
+                  <li id="description"></li>
+                </ul>
               </div>
             </div>
           </div>
-
-          <div class="row">
-            <div class="col-6">
-              <div class="clearfix weather-temperature">
-                <div class="float-left">
-                  <strong id="temperature"></strong
-                  ><span class="units"
-                    ><a href="#" id="celsius-link" class="active">°C</a> |
-                    <a href="#" id="fahrenheit-link">°F</a></span
-                  >
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <ul>
-                <li>
-                  <strong>Humidity: </strong> <span id="humidity"></span>%
-                </li>
-                <li><strong>Wind: </strong><span id="wind"></span> km/h</li>
-              </ul>
-            </div>
-          </div>
-          <div class="row weather-forecast" id="forecast"></div>
         </div>
-        <small>
-          <a
-            href="https://github.com/pamsflying/weather-project"
-            target="_blank"
-            >Open-source code</a
-          >
-          by Pam Miller
-        </small>
+
+        <div class="row">
+          <div class="col-6">
+            <div class="clearfix weather-temperature">
+              <div class="float-left">
+                <strong id="temperature"></strong><span class="units"><a href="#" id="celsius-link"
+                    class="active">°C</a> |
+                  <a href="#" id="fahrenheit-link">°F</a></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6">
+            <ul>
+              <li>
+                <strong>Humidity: </strong> <span id="humidity"></span>%
+              </li>
+              <li><strong>Wind: </strong><span id="wind"></span> km/h</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row weather-forecast" id="forecast"></div>
       </div>
+      <small>
+        <a href="https://github.com/pamsflying/weather-project" target="_blank">Open-source code</a>
+        by Pam Miller
+      </small>
     </div>
-    <script src="src/app.js"></script>
-  </body>
+  </div>
+  <script src="src/app.js"></script>
+</body>
+
 </html>

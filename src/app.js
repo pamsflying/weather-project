@@ -14,6 +14,8 @@ function formatDate(timestamp) {
   let day = days[date.getDay()];
   return `${day} at ${formatHours(timestamp)}`;
 }
+
+//format time
 function formatHours(timestamp) {
   let date = new Date(timestamp);
   let hours = date.getHours();
@@ -48,13 +50,6 @@ function displayTemperature(response) {
   dateElement.innerHTML = formatDate(response.data.dt * 1000);
   iconElement.setAttribute("src", changeImage(response.data.weather[0].icon));
   iconElement.setAttribute("alt", response.data.weather[0].description);
-
-  //convert to US am/pm
-  timeElement.innerHTML = date.formatHours("en-US", {
-    hour: "numeric",
-    minute: "numeric",
-    hour12: true,
-  });
 }
 
 //Icons reflect the weather
@@ -101,7 +96,6 @@ function displayForecast(response) {
   let forecastElement = document.querySelector("#forecast");
   forecastElement.innerHTML = null;
   let forecast = null;
-
   for (let index = 0; index < 6; index++) {
     forecast = response.data.list[index];
     forecastElement.innerHTML += `
@@ -111,12 +105,13 @@ function displayForecast(response) {
       </h3>
       <img src="${changeImage(forecast.weather[0].icon)}" id="icon" />
       <div class="weather-forecast-temperature">
-        <strong id="forcast-high" class="forecastTempMax">
-          ${Math.round(forecast.main.temp_max)}°
+        <strong>
+          <span class="forecast-high">${Math.round(
+            forecast.main.temp_max
+          )}</span>°
         </strong>
-        <span id="forecast-low" class="forecastTempMin">
-        ${Math.round(forecast.main.temp_min)}°
-        </span>
+        <span class="forecast-low">
+        ${Math.round(forecast.main.temp_min)}</span>°
       </div>
     </div>
   `;
@@ -124,6 +119,7 @@ function displayForecast(response) {
 }
 
 //searching city and submiting button
+
 function search(city) {
   let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
@@ -160,66 +156,34 @@ function displayFahrenheitTemperature(event) {
   let temperatureElement = document.querySelector("#temperature");
   celsiusLink.classList.remove("active");
   fahrenheitLink.classList.add("active");
-
-  celsiusLink.addEventListener("click", displayCelsiusTemperature);
-  fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
-
   let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
   temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
-
-  let highTempElement = document.querySelectorAll("#forecast-high");
-  let highTemp = (temperatureHigh * 9) / 5 + 32;
-  highTempElement.innerHTML = `${Math.round(highTemp)}`;
-
-  let lowTempElement = document.querySelector("#temperatureLow");
-  let lowTemp = (temperatureLow * 9) / 5 + 32;
-  lowTempElement.innerHTML = `${Math.round(lowTemp)}`;
-
-  let highElement = document.querySelectorAll(".forecastTempMax");
-  let lowElement = document.querySelectorAll(".forecastTempMin");
-
+  let highElement = document.querySelectorAll(".forecast-high");
+  let lowElement = document.querySelectorAll(".forecast-low");
   highElement.forEach(function (high) {
-    let currentTemp = high.innerHTML;
-    high.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}`;
-    return highElement;
+    let currentTempHigh = high.innerHTML;
+    high.innerHTML = `${Math.round((currentTempHigh * 9) / 5 + 32)}`;
   });
-
   lowElement.forEach(function (low) {
-    let currentTemp = low.innerHTML;
-    low.innerHTML = `${Math.round((currentTemp * 9) / 5 + 32)}`;
-    return lowElement;
+    let currentTempLow = low.innerHTML;
+    low.innerHTML = `${Math.round((currentTempLow * 9) / 5 + 32)}`;
   });
 }
-
-function convertCelsius(event) {
+function displayCelsiusTemperature(event) {
   event.preventDefault();
-
-  let temperatureElement = document.querySelector("#temperature");
-  temperatureElement.innerHTML = Math.round(celsiusTemperature);
   celsiusLink.classList.add("active");
   fahrenheitLink.classList.remove("active");
-
-  let highTempElement = document.querySelectorAll("#forecast-high");
-  let highTemp = (temperatureHigh * 9) / 5 + 32;
-  highTempElement.innerHTML = `${Math.round(highTemp)}`;
-
-  let lowTempElement = document.querySelector("#temperatureLow");
-  let lowTemp = (temperatureLow * 9) / 5 + 32;
-  lowTempElement.innerHTML = `${Math.round(lowTemp)}`;
-
-  let highElement = document.querySelectorAll(".forecastTempMax");
-  let lowElement = document.querySelectorAll(".forecastTempMin");
-
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
+  let highElement = document.querySelectorAll(".forecast-high");
+  let lowElement = document.querySelectorAll(".forecast-low");
   highElement.forEach(function (high) {
     let currentTemp = high.innerHTML;
     high.innerHTML = `${Math.round(((currentTemp - 32) * 5) / 9)}`;
-    return highElement;
   });
-
   lowElement.forEach(function (low) {
     let currentTemp = low.innerHTML;
     low.innerHTML = `${Math.round(((currentTemp - 32) * 5) / 9)}`;
-    return lowElement;
   });
 }
 
